@@ -35,10 +35,10 @@ export default function Projects() {
   }, [projects, filter, search]);
 
   return (
-    <div className="container mx-auto px-4 py-12">
-      <div className="mb-12">
-        <h1 className="text-4xl md:text-5xl font-display font-bold mb-4">All Projects</h1>
-        <p className="text-lg text-muted-foreground max-w-2xl">
+    <div className="container mx-auto px-4 py-8 md:py-12">
+      <div className="mb-8 md:mb-12">
+        <h1 className="text-3xl md:text-5xl font-display font-bold mb-3">All Projects</h1>
+        <p className="text-base md:text-lg text-muted-foreground max-w-2xl">
           A comprehensive archive of engineering projects, studies, and designs.
         </p>
       </div>

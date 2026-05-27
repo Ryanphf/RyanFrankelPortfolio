@@ -29,18 +29,18 @@ const ABOUT = {
 
 export default function About() {
   return (
-    <div className="container mx-auto px-4 pt-24 pb-32 max-w-3xl">
+    <div className="container mx-auto px-4 pt-10 pb-16 md:pt-24 md:pb-32 max-w-3xl">
       {/* Header */}
-      <div className="mb-16">
+      <div className="mb-10 md:mb-16">
         <p className="font-mono text-xs uppercase tracking-widest text-primary mb-4">About me</p>
-        <h1 className="text-5xl font-bold tracking-tight mb-6">{ABOUT.name}</h1>
-        <p className="text-lg font-mono text-muted-foreground mb-8">{ABOUT.role}</p>
-        <p className="text-lg text-foreground leading-relaxed mb-4">{ABOUT.bio}</p>
-        <p className="text-lg text-muted-foreground leading-relaxed">{ABOUT.bio2}</p>
+        <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-4 md:mb-6">{ABOUT.name}</h1>
+        <p className="text-base font-mono text-muted-foreground mb-6 md:mb-8">{ABOUT.role}</p>
+        <p className="text-base md:text-lg text-foreground leading-relaxed mb-4">{ABOUT.bio}</p>
+        <p className="text-base md:text-lg text-muted-foreground leading-relaxed">{ABOUT.bio2}</p>
       </div>
 
       {/* Traits */}
-      <section className="mb-16">
+      <section className="mb-10 md:mb-16">
         <h2 className="text-2xl font-bold mb-6">How I work</h2>
         <div className="grid sm:grid-cols-2 gap-4">
           {ABOUT.traits.map((trait) => (
@@ -57,7 +57,7 @@ export default function About() {
       </section>
 
       {/* Skills */}
-      <section className="mb-16">
+      <section className="mb-10 md:mb-16">
         <h2 className="text-2xl font-bold mb-6">Tools &amp; skills</h2>
         <div className="flex flex-wrap gap-2">
           {ABOUT.skills.map((skill) => (

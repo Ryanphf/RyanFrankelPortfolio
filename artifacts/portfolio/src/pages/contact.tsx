@@ -8,7 +8,7 @@ const CONTACT = {
 
 export default function Contact() {
   return (
-    <div className="container mx-auto px-4 pt-24 pb-32 max-w-2xl">
+    <div className="container mx-auto px-4 pt-10 pb-16 md:pt-24 md:pb-32 max-w-2xl">
       <div className="mb-12">
         <p className="font-mono text-xs uppercase tracking-widest text-primary mb-4">Get in touch</p>
         <h1 className="text-5xl font-bold tracking-tight mb-4">Contact</h1>

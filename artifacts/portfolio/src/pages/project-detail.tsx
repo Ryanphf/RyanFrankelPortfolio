@@ -16,19 +16,19 @@ export default function ProjectDetail() {
 
   if (isLoading) {
     return (
-      <div className="container mx-auto px-4 py-12 animate-pulse">
+      <div className="container mx-auto px-4 py-10 animate-pulse">
         <div className="w-24 h-4 bg-muted mb-8 rounded"></div>
-        <div className="w-3/4 h-12 bg-muted mb-4 rounded"></div>
-        <div className="w-1/2 h-6 bg-muted mb-12 rounded"></div>
-        <div className="w-full aspect-video bg-muted rounded-lg mb-12"></div>
+        <div className="w-3/4 h-10 bg-muted mb-4 rounded"></div>
+        <div className="w-1/2 h-5 bg-muted mb-10 rounded"></div>
+        <div className="w-full aspect-video bg-muted rounded-lg mb-10"></div>
       </div>
     );
   }
 
   if (isError || !project) {
     return (
-      <div className="container mx-auto px-4 py-24 text-center">
-        <h1 className="text-3xl font-bold mb-4">Project not found</h1>
+      <div className="container mx-auto px-4 py-20 text-center">
+        <h1 className="text-2xl font-bold mb-4">Project not found</h1>
         <Button asChild variant="outline">
           <Link href="/projects">Return to Projects</Link>
         </Button>
@@ -37,15 +37,15 @@ export default function ProjectDetail() {
   }
 
   return (
-    <article className="pb-24">
+    <article className="pb-16 md:pb-24">
       {/* Header */}
-      <header className="bg-card border-b border-border/50 py-12 md:py-20">
+      <header className="bg-card border-b border-border/50 py-8 md:py-20">
         <div className="container mx-auto px-4 max-w-4xl">
-          <Link href="/projects" className="inline-flex items-center text-sm font-medium text-muted-foreground hover:text-foreground mb-8 transition-colors">
+          <Link href="/projects" className="inline-flex items-center text-sm font-medium text-muted-foreground hover:text-foreground mb-6 md:mb-8 transition-colors">
             <ArrowLeft className="w-4 h-4 mr-2" /> Back to projects
           </Link>
-          
-          <div className="flex flex-wrap items-center gap-3 mb-6">
+
+          <div className="flex flex-wrap items-center gap-2 mb-4">
             <Badge className="bg-primary/10 text-primary border-primary/20 hover:bg-primary/20 font-mono text-xs uppercase tracking-wider">
               {project.category}
             </Badge>
@@ -53,23 +53,23 @@ export default function ProjectDetail() {
               <Badge variant="secondary" className="font-mono text-xs uppercase tracking-wider">Featured</Badge>
             )}
           </div>
-          
-          <h1 className="text-4xl md:text-6xl font-display font-bold mb-6 leading-tight">
+
+          <h1 className="text-3xl md:text-6xl font-display font-bold mb-4 md:mb-6 leading-tight">
             {project.title}
           </h1>
-          
-          <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed mb-8">
+
+          <p className="text-base md:text-2xl text-muted-foreground leading-relaxed mb-6 md:mb-8">
             {project.description}
           </p>
 
-          <div className="flex flex-wrap items-center gap-6 text-sm text-muted-foreground font-medium">
+          <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground font-medium">
             <div className="flex items-center">
               <Calendar className="w-4 h-4 mr-2" />
               {format(new Date(project.createdAt), 'MMMM yyyy')}
             </div>
-            
+
             {(project.githubUrl || project.liveUrl) && (
-              <div className="flex items-center gap-4 border-l border-border pl-6">
+              <div className="flex items-center gap-4 md:border-l md:border-border md:pl-6">
                 {project.githubUrl && (
                   <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className="flex items-center text-foreground hover:text-primary transition-colors">
                     <Github className="w-4 h-4 mr-2" /> Repository
@@ -87,28 +87,42 @@ export default function ProjectDetail() {
       </header>
 
       {/* Content */}
-      <div className="container mx-auto px-4 max-w-4xl mt-12">
+      <div className="container mx-auto px-4 max-w-4xl mt-8 md:mt-12">
         {project.imageUrl && (
-          <div className="mb-16 rounded-xl overflow-hidden shadow-lg border border-border/50 bg-muted">
-            <img 
-              src={project.imageUrl} 
+          <div className="mb-10 md:mb-16 rounded-xl overflow-hidden shadow-lg border border-border/50 bg-muted">
+            <img
+              src={project.imageUrl}
               alt={project.title}
               className="w-full h-auto"
             />
           </div>
         )}
 
+        {/* Tags shown above content on mobile, sidebar on desktop */}
+        {project.tags && project.tags.length > 0 && (
+          <div className="md:hidden bg-card border border-border/50 rounded-lg p-4 mb-8">
+            <h3 className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-3 font-mono">Technologies & Tags</h3>
+            <div className="flex flex-wrap gap-2">
+              {project.tags.map(tag => (
+                <span key={tag} className="text-xs font-medium px-2.5 py-1 bg-secondary text-secondary-foreground rounded-md">
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
+
         <div className="grid md:grid-cols-[1fr_250px] gap-12 items-start">
-          <div className="prose prose-neutral dark:prose-invert prose-lg max-w-none prose-headings:font-display prose-headings:font-bold prose-a:text-primary">
+          <div className="prose prose-neutral dark:prose-invert prose-base md:prose-lg max-w-none prose-headings:font-display prose-headings:font-bold prose-a:text-primary">
             {project.longDescription ? (
-              <div dangerouslySetContent={{ __html: project.longDescription }} className="whitespace-pre-wrap font-sans" />
+              <p className="whitespace-pre-wrap font-sans leading-relaxed">{project.longDescription}</p>
             ) : (
               <p>{project.description}</p>
             )}
           </div>
 
           {project.tags && project.tags.length > 0 && (
-            <div className="sticky top-24 bg-card border border-border/50 rounded-lg p-6">
+            <div className="hidden md:block sticky top-24 bg-card border border-border/50 rounded-lg p-6">
               <h3 className="text-sm font-bold uppercase tracking-wider text-muted-foreground mb-4 font-mono">Technologies & Tags</h3>
               <div className="flex flex-wrap gap-2">
                 {project.tags.map(tag => (

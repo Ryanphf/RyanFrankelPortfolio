@@ -8,11 +8,11 @@ export default function Resume() {
   const { data: resume, isLoading } = useGetResume();
 
   return (
-    <div className="container mx-auto px-4 py-12 max-w-5xl">
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+    <div className="container mx-auto px-4 py-8 md:py-12 max-w-5xl">
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8 md:mb-12">
         <div>
-          <h1 className="text-4xl md:text-5xl font-display font-bold mb-4">Curriculum Vitae</h1>
-          <p className="text-lg text-muted-foreground">
+          <h1 className="text-3xl md:text-5xl font-display font-bold mb-3">Curriculum Vitae</h1>
+          <p className="text-base md:text-lg text-muted-foreground">
             A summary of my professional experience, education, and skills.
           </p>
         </div>
