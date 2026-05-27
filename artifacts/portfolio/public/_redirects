@@ -1,0 +1,3 @@
+# Netlify / AWS Amplify — SPA fallback
+# All routes are handled by React Router / wouter on the client.
+/*  /index.html  200
