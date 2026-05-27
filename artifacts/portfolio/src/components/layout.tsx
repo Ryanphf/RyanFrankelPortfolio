@@ -24,7 +24,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
           <Link href="/" className="font-display font-bold text-xl tracking-tight flex items-center gap-2">
             <Compass className="w-5 h-5 text-primary" />
-            <span>Eng.Portfolio</span>
+            <span>Ryan Frankel</span>
           </Link>
           <nav className="flex items-center gap-6 text-sm font-medium">
             <Link href="/projects" className={`hover:text-primary transition-colors ${location.startsWith("/projects") ? "text-primary" : "text-muted-foreground"}`}>
@@ -49,7 +49,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <footer className="border-t border-border/50 bg-card py-12 mt-12">
         <div className="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-4">
           <div className="text-sm text-muted-foreground">
-            &copy; {new Date().getFullYear()} Mechanical Engineer Portfolio. All rights reserved.
+            &copy; {new Date().getFullYear()} Ryan Frankel. All rights reserved.
           </div>
           <div className="flex items-center gap-4">
             {adminMe?.isAdmin ? (
