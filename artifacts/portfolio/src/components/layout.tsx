@@ -33,6 +33,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <Link href="/resume" className={`hover:text-primary transition-colors ${location === "/resume" ? "text-primary" : "text-muted-foreground"}`}>
               Resume
             </Link>
+            <Link href="/contact" className={`hover:text-primary transition-colors ${location === "/contact" ? "text-primary" : "text-muted-foreground"}`}>
+              Contact
+            </Link>
             {adminMe?.isAdmin && (
               <Link href="/admin" className={`hover:text-primary transition-colors ${location.startsWith("/admin") ? "text-primary" : "text-muted-foreground"}`}>
                 Admin
