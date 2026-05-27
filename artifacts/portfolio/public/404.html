@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Ryan Frankel</title>
+    <script>
+      // GitHub Pages SPA redirect
+      // Encodes the current path/query/hash into a ?p= search param and redirects to index.html.
+      // The script in index.html decodes it and restores the real URL via history.replaceState.
+      var l = window.location;
+      l.replace(
+        l.protocol + '//' + l.host + l.pathname.split('/').slice(0, 1).join('/') +
+        '/?p=' + encodeURIComponent(l.pathname + l.search + l.hash).replace(/%2F/g, '/')
+      );
+    </script>
+  </head>
+  <body></body>
+</html>

@@ -19,6 +19,16 @@
   </head>
   <body>
     <div id="root"></div>
+    <!-- GitHub Pages SPA path restore: reads ?p= set by 404.html and replaces the URL -->
+    <script>
+      (function() {
+        var redirect = window.location.search.match(/[?&]p=([^&]+)/);
+        if (redirect) {
+          var path = decodeURIComponent(redirect[1]);
+          window.history.replaceState(null, null, path || '/');
+        }
+      })();
+    </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
