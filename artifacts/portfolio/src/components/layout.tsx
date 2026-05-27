@@ -27,6 +27,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <span>Ryan Frankel</span>
           </Link>
           <nav className="flex items-center gap-6 text-sm font-medium">
+            <Link href="/about" className={`hover:text-primary transition-colors ${location === "/about" ? "text-primary" : "text-muted-foreground"}`}>
+              About
+            </Link>
             <Link href="/projects" className={`hover:text-primary transition-colors ${location.startsWith("/projects") ? "text-primary" : "text-muted-foreground"}`}>
               Projects
             </Link>
