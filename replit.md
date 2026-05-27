@@ -1,20 +1,21 @@
-# [Project name]
+# Mechanical Engineer Portfolio
 
-_Replace the heading above with the project's name, and this line with one sentence describing what this app does for users._
+A personal portfolio site for a mechanical engineer — featuring a project gallery, resume viewer/downloader, and a private admin panel for managing content.
 
 ## Run & Operate
 
-- `pnpm --filter @workspace/api-server run dev` — run the API server (port 5000)
+- `pnpm --filter @workspace/api-server run dev` — run the API server (port 8080)
+- `pnpm --filter @workspace/portfolio run dev` — run the frontend (port 21113)
 - `pnpm run typecheck` — full typecheck across all packages
 - `pnpm run build` — typecheck + build all packages
 - `pnpm --filter @workspace/api-spec run codegen` — regenerate API hooks and Zod schemas from the OpenAPI spec
 - `pnpm --filter @workspace/db run push` — push DB schema changes (dev only)
-- Required env: `DATABASE_URL` — Postgres connection string
 
 ## Stack
 
 - pnpm workspaces, Node.js 24, TypeScript 5.9
-- API: Express 5
+- Frontend: React + Vite, TailwindCSS, shadcn/ui, wouter, TanStack Query
+- API: Express 5 + express-session
 - DB: PostgreSQL + Drizzle ORM
 - Validation: Zod (`zod/v4`), `drizzle-zod`
 - API codegen: Orval (from OpenAPI spec)
@@ -22,23 +23,40 @@ _Replace the heading above with the project's name, and this line with one sente
 
 ## Where things live
 
-_Populate as you build — short repo map plus pointers to the source-of-truth file for DB schema, API contracts, theme files, etc._
+- `lib/api-spec/openapi.yaml` — OpenAPI spec (source of truth for all contracts)
+- `lib/db/src/schema/projects.ts` — projects table schema
+- `artifacts/api-server/src/routes/` — API routes (projects, admin, resume)
+- `artifacts/api-server/resume_files/` — place your `resume.pdf` here for the resume page
+- `artifacts/portfolio/src/` — React frontend (pages in `src/pages/`)
 
 ## Architecture decisions
 
-_Populate as you build — non-obvious choices a reader couldn't infer from the code (3-5 bullets)._
+- Admin auth uses express-session + a password stored in `ADMIN_PASSWORD` secret — no user accounts needed since only one admin exists.
+- Resume is served as a static file from `artifacts/api-server/resume_files/resume.pdf`. To upload your resume, place your PDF there and restart the API server.
+- All API contracts are OpenAPI-first; never hand-write types that codegen produces.
+- `SESSION_SECRET` is required for the session middleware — already configured in Replit Secrets.
 
 ## Product
 
-_Describe the high-level user-facing capabilities of this app once they exist._
+- **Home** (`/`) — hero intro, featured projects, portfolio stats
+- **Projects** (`/projects`) — filterable gallery of all engineering projects
+- **Project detail** (`/projects/:id`) — full project description, tags, links
+- **Resume** (`/resume`) — inline PDF viewer + prominent download button
+- **Admin login** (`/admin/login`) — password-protected (uses `ADMIN_PASSWORD` secret)
+- **Admin dashboard** (`/admin`) — manage all projects (edit/delete)
+- **Admin form** (`/admin/project/new`, `/admin/project/:id/edit`) — add or edit projects
 
 ## User preferences
 
-_Populate as you build — explicit user instructions worth remembering across sessions._
+- Modern but human/real aesthetic — warm industrial tones, strong typography
+- No emojis in the UI
 
 ## Gotchas
 
-_Populate as you build — sharp edges, "always run X before Y" rules._
+- To add your resume: place `resume.pdf` in `artifacts/api-server/resume_files/` then restart the API workflow.
+- After any OpenAPI spec change, run `pnpm --filter @workspace/api-spec run codegen` before touching backend or frontend.
+- Session cookies use `secure: true` in production — ensure HTTPS is enabled on deployment.
+- `ADMIN_PASSWORD` and `SESSION_SECRET` must be set in Replit Secrets before starting.
 
 ## Pointers
 
