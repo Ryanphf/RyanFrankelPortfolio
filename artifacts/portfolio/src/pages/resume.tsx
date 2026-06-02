@@ -39,7 +39,7 @@ export default function Resume() {
           )}
           <div className="w-full aspect-[1/1.4] bg-card rounded-lg border border-border/50 shadow-xl overflow-hidden relative">
             <iframe 
-              src={`${resume.downloadUrl}?view=1`} 
+              src="/api/resume/view"
               className="absolute inset-0 w-full h-full border-0"
               title="Resume Document"
             />
