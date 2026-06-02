@@ -5,8 +5,8 @@ import { Link } from "wouter";
 const ABOUT = {
   name: "Ryan Frankel",
   role: "Mechanical Engineer",
-  bio: "I'm a mechanical engineer with a passion for designing systems that work elegantly in the real world. My work sits at the intersection of thermal management, structural analysis, and precision manufacturing — the kind of problems that require both analytical rigor and practical intuition.",
-  bio2: "I believe the best engineering is invisible: when a system performs exactly as intended, nobody notices the design decisions that made it possible.",
+  bio: "A dedicated and motivated Mechanical Engineering student with a strong passion for automotive technology and innovation. Possesses excellent teamwork abilities, consistently contributing to collaborative projects with a positive attitude and effective communication skills. A fast learner, eager to acquire new knowledge and skills, and always ready to take on new challenges. Seeking opportunities to apply engineering principles in a dynamic environment, with a keen interest in advancing expertise in the automotive industry",
+  //bio2: "I believe the best engineering is invisible: when a system performs exactly as intended, nobody notices the design decisions that made it possible.",
   traits: [
     { label: "Detail-oriented", description: "I care about the tolerance stacks, the weld classifications, and the corner cases." },
     { label: "Systems thinker", description: "Every component exists in context. I design with the full lifecycle in mind." },

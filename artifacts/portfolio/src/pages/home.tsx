@@ -15,13 +15,13 @@ export default function Home() {
       <section className="container mx-auto px-4 pt-12 pb-16 md:pt-24 md:pb-32">
         <div className="max-w-3xl">
           <Badge variant="outline" className="mb-5 px-3 py-1 font-mono text-xs uppercase tracking-widest text-primary border-primary/20 bg-primary/5">
-            Systems & Mechanics
+            Mechanical Engineering
           </Badge>
           <h1 className="text-4xl md:text-7xl font-bold tracking-tight mb-6 md:mb-8 leading-tight">
             Building robust <span className="text-primary">physical systems</span> with precision.
           </h1>
           <p className="text-base md:text-xl text-muted-foreground mb-8 md:mb-10 max-w-2xl leading-relaxed">
-            I am a mechanical engineer focused on product design, thermofluids, and automated systems. Bridging the gap between theoretical analysis and manufactured reality.
+            I am a student at California Polytechnic State University, Pomona pursuing a degree in Mechanical Engineering with a passion for motorsports and innovation.
           </p>
           <div className="flex flex-col sm:flex-row gap-3">
             <Link href="/projects" className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-11 px-8">

@@ -1,9 +1,9 @@
 import { Mail, Linkedin, MapPin, ExternalLink } from "lucide-react";
 
 const CONTACT = {
-  email: "ryan.frankel@email.com",
-  linkedin: "linkedin.com/in/ryanfrankel",
-  location: "San Francisco Bay Area, CA",
+  email: "rpfrankel@cpp.edu",
+  linkedin: "linkedin.com/in/ryan-p-frankel",
+  location: "Los Angeles, CA",
 };
 
 export default function Contact() {
