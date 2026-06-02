@@ -222,12 +222,20 @@ export default function CarDodge() {
     ro.observe(container);
 
     const onKey = (e: KeyboardEvent) => {
-      if (["ArrowLeft", "ArrowRight"].includes(e.key)) {
+      if (["ArrowLeft", "ArrowRight", "a", "d", "A", "D"].includes(e.key)) {
         e.preventDefault();
-        keysRef.current.add(e.key);
+        const mapped = (e.key === "a" || e.key === "A") ? "ArrowLeft"
+                     : (e.key === "d" || e.key === "D") ? "ArrowRight"
+                     : e.key;
+        keysRef.current.add(mapped);
       }
     };
-    const onKeyUp = (e: KeyboardEvent) => keysRef.current.delete(e.key);
+    const onKeyUp = (e: KeyboardEvent) => {
+      const mapped = (e.key === "a" || e.key === "A") ? "ArrowLeft"
+                   : (e.key === "d" || e.key === "D") ? "ArrowRight"
+                   : e.key;
+      keysRef.current.delete(mapped);
+    };
     window.addEventListener("keydown", onKey);
     window.addEventListener("keyup", onKeyUp);
 
@@ -384,6 +392,20 @@ export default function CarDodge() {
         drawCar(ctx, ex, e.y, ENEMY_W, ENEMY_H, e.color.body, e.color.roof, e.color.glass, false);
       });
 
+      // Live score overlay
+      if (s.started && !s.over) {
+        const scoreText = String(s.score);
+        ctx.font = "bold 28px 'Space Mono', monospace";
+        ctx.textAlign = "right";
+        ctx.textBaseline = "top";
+        ctx.fillStyle = "rgba(0,0,0,0.35)";
+        ctx.fillText(scoreText, w - 14, 16);
+        ctx.fillStyle = "rgba(255,255,255,0.92)";
+        ctx.fillText(scoreText, w - 16, 14);
+        ctx.textAlign = "left";
+        ctx.textBaseline = "alphabetic";
+      }
+
       // Draw player
       if (s.started) {
         if (s.playerX === 0) s.playerX = getLaneX(1, laneW, roadX);
@@ -415,7 +437,7 @@ export default function CarDodge() {
       <div className="flex items-center justify-between mb-4">
         <div>
           <h1 className="text-3xl font-bold">Highway Run</h1>
-          <p className="text-sm text-muted-foreground mt-1">Arrow Left / Right to change lanes</p>
+          <p className="text-sm text-muted-foreground mt-1">← → or A / D to change lanes</p>
         </div>
         <div className="flex items-center gap-2">
           <Link href="/minigames/leaderboard">
