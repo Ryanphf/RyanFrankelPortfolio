@@ -162,6 +162,38 @@ export const GetProjectStatsResponse = zod.object({
 
 
 /**
+ * @summary Get top scores for a game
+ */
+export const GetLeaderboardParams = zod.object({
+  "game": zod.coerce.string()
+})
+
+export const GetLeaderboardResponseItem = zod.object({
+  "id": zod.number(),
+  "playerName": zod.string(),
+  "score": zod.number(),
+  "game": zod.string(),
+  "createdAt": zod.string()
+})
+export const GetLeaderboardResponse = zod.array(GetLeaderboardResponseItem)
+
+
+/**
+ * @summary Submit a score to the leaderboard
+ */
+export const submitScoreBodyPlayerNameMax = 30;
+
+
+
+
+export const SubmitScoreBody = zod.object({
+  "playerName": zod.string().min(1).max(submitScoreBodyPlayerNameMax),
+  "score": zod.number().min(1),
+  "game": zod.string()
+})
+
+
+/**
  * @summary Admin login
  */
 export const AdminLoginBody = zod.object({

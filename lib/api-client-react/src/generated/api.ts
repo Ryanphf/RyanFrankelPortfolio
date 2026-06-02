@@ -23,11 +23,13 @@ import type {
   AdminCredentials,
   AdminSession,
   HealthStatus,
+  LeaderboardEntry,
   Project,
   ProjectInput,
   ProjectStats,
   ProjectUpdate,
-  ResumeInfo
+  ResumeInfo,
+  ScoreSubmission
 } from './api.schemas';
 
 import { customFetch } from '../custom-fetch';
@@ -639,6 +641,154 @@ export function useGetProjectStats<TData = Awaited<ReturnType<typeof getProjectS
 
 
 
+
+export const getGetLeaderboardUrl = (game: string,) => {
+
+
+
+
+  return `/api/leaderboard/${game}`
+}
+
+/**
+ * @summary Get top scores for a game
+ */
+export const getLeaderboard = async (game: string, options?: RequestInit): Promise<LeaderboardEntry[]> => {
+
+  return customFetch<LeaderboardEntry[]>(getGetLeaderboardUrl(game),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getGetLeaderboardQueryKey = (game: string,) => {
+    return [
+    `/api/leaderboard/${game}`
+    ] as const;
+    }
+
+
+export const getGetLeaderboardQueryOptions = <TData = Awaited<ReturnType<typeof getLeaderboard>>, TError = ErrorType<unknown>>(game: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getLeaderboard>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetLeaderboardQueryKey(game);
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getLeaderboard>>> = ({ signal }) => getLeaderboard(game, { signal, ...requestOptions });
+
+
+
+
+
+   return  { queryKey, queryFn, enabled: !!(game), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getLeaderboard>>, TError, TData> & { queryKey: QueryKey }
+}
+
+export type GetLeaderboardQueryResult = NonNullable<Awaited<ReturnType<typeof getLeaderboard>>>
+export type GetLeaderboardQueryError = ErrorType<unknown>
+
+
+/**
+ * @summary Get top scores for a game
+ */
+
+export function useGetLeaderboard<TData = Awaited<ReturnType<typeof getLeaderboard>>, TError = ErrorType<unknown>>(
+ game: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getLeaderboard>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
+
+ ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+
+  const queryOptions = getGetLeaderboardQueryOptions(game,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  return { ...query, queryKey: queryOptions.queryKey };
+}
+
+
+
+
+
+
+
+export const getSubmitScoreUrl = () => {
+
+
+
+
+  return `/api/leaderboard`
+}
+
+/**
+ * @summary Submit a score to the leaderboard
+ */
+export const submitScore = async (scoreSubmission: ScoreSubmission, options?: RequestInit): Promise<LeaderboardEntry> => {
+
+  return customFetch<LeaderboardEntry>(getSubmitScoreUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      scoreSubmission,)
+  }
+);}
+
+
+
+
+export const getSubmitScoreMutationOptions = <TError = ErrorType<void>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof submitScore>>, TError,{data: BodyType<ScoreSubmission>}, TContext>, request?: SecondParameter<typeof customFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof submitScore>>, TError,{data: BodyType<ScoreSubmission>}, TContext> => {
+
+const mutationKey = ['submitScore'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof submitScore>>, {data: BodyType<ScoreSubmission>}> = (props) => {
+          const {data} = props ?? {};
+
+          return  submitScore(data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type SubmitScoreMutationResult = NonNullable<Awaited<ReturnType<typeof submitScore>>>
+    export type SubmitScoreMutationBody = BodyType<ScoreSubmission>
+    export type SubmitScoreMutationError = ErrorType<void>
+
+    /**
+ * @summary Submit a score to the leaderboard
+ */
+export const useSubmitScore = <TError = ErrorType<void>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof submitScore>>, TError,{data: BodyType<ScoreSubmission>}, TContext>, request?: SecondParameter<typeof customFetch>}
+ ): UseMutationResult<
+        Awaited<ReturnType<typeof submitScore>>,
+        TError,
+        {data: BodyType<ScoreSubmission>},
+        TContext
+      > => {
+      return useMutation(getSubmitScoreMutationOptions(options));
+    }
 
 export const getAdminLoginUrl = () => {
 

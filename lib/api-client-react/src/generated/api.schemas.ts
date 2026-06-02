@@ -70,6 +70,25 @@ export interface ProjectStats {
   categories: ProjectStatsCategoriesItem[];
 }
 
+export interface LeaderboardEntry {
+  id: number;
+  playerName: string;
+  score: number;
+  game: string;
+  createdAt: string;
+}
+
+export interface ScoreSubmission {
+  /**
+     * @minLength 1
+     * @maxLength 30
+     */
+  playerName: string;
+  /** @minimum 1 */
+  score: number;
+  game: string;
+}
+
 export interface AdminCredentials {
   password: string;
 }

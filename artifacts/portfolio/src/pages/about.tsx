@@ -118,9 +118,6 @@ export default function About() {
         <p className="text-base md:text-lg text-foreground leading-relaxed mb-4">
           {ABOUT.bio}
         </p>
-        <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
-          {ABOUT.bio2}
-        </p>
       </div>
 
       {/* Traits */}

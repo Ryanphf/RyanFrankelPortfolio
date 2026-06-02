@@ -156,6 +156,48 @@ paths:
               schema:
                 $ref: "#/components/schemas/ProjectStats"
 
+  /leaderboard/{game}:
+    get:
+      operationId: getLeaderboard
+      tags: [leaderboard]
+      summary: Get top scores for a game
+      parameters:
+        - name: game
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Top leaderboard entries
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/LeaderboardEntry"
+
+  /leaderboard:
+    post:
+      operationId: submitScore
+      tags: [leaderboard]
+      summary: Submit a score to the leaderboard
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ScoreSubmission"
+      responses:
+        "201":
+          description: Score submitted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LeaderboardEntry"
+        "400":
+          description: Invalid input
+
   /admin/login:
     post:
       operationId: adminLogin
@@ -332,6 +374,35 @@ components:
                 type: string
               count:
                 type: integer
+
+    LeaderboardEntry:
+      type: object
+      required: [id, playerName, score, game, createdAt]
+      properties:
+        id:
+          type: integer
+        playerName:
+          type: string
+        score:
+          type: integer
+        game:
+          type: string
+        createdAt:
+          type: string
+
+    ScoreSubmission:
+      type: object
+      required: [playerName, score, game]
+      properties:
+        playerName:
+          type: string
+          minLength: 1
+          maxLength: 30
+        score:
+          type: integer
+          minimum: 1
+        game:
+          type: string
 
     AdminCredentials:
       type: object
