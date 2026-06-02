@@ -1,4 +1,29 @@
-import { Wrench, BookOpen, Mountain, Coffee, Music, Gamepad2, ChevronRight } from "lucide-react";
+import { Mountain, Coffee, Music, Gamepad2, ChevronRight } from "lucide-react";
+
+function SkisIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <line x1="5" y1="3" x2="9" y2="21" />
+      <line x1="19" y1="3" x2="15" y2="21" />
+      <path d="M5 17 Q7 15 12 16 Q17 17 19 15" />
+      <line x1="3" y1="21" x2="11" y2="21" />
+      <line x1="13" y1="21" x2="21" y2="21" />
+    </svg>
+  );
+}
+
+function DirtBikeIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="5.5" cy="17.5" r="3" />
+      <circle cx="18.5" cy="17.5" r="3" />
+      <path d="M5.5 17.5 L9 10 L13 10 L16 14 L18.5 17.5" />
+      <path d="M13 10 L15 6 L18 6" />
+      <path d="M9 10 L7 13" />
+    </svg>
+  );
+}
+
 import { Badge } from "@/components/ui/badge";
 import { Link } from "wouter";
 
@@ -14,12 +39,12 @@ const ABOUT = {
     { label: "Clear communicator", description: "I write documentation people actually read and give presentations that land." },
   ],
   hobbies: [
-    { icon: Mountain, label: "Hiking & Backpacking", description: "Multi-day trips in the Sierras and Pacific Northwest." },
-    { icon: Wrench, label: "Tinkering", description: "Home shop with a lathe, mill, and too many half-finished projects." },
-    { icon: BookOpen, label: "Reading", description: "Technical history, systems theory, and good non-fiction." },
-    { icon: Coffee, label: "Specialty Coffee", description: "Home roasting and dialing in espresso recipes." },
-    { icon: Music, label: "Music", description: "Guitar — fingerpicking and the occasional open mic." },
-    { icon: Gamepad2, label: "Video Games", description: "Classics and racers. Click to play a few mini-games.", href: "/minigames" },
+    { icon: Mountain, label: "Mountain Biking", description: "Love a good trail day, whether it's singletrack or a local pump track." },
+    { icon: SkisIcon, label: "Skiing", description: "I am an avid skier, love carving turns and hitting the powder." },
+    { icon: DirtBikeIcon, label: "Motorcycles", description: "I own a DRZ400SM and enjoy canyons and the track." },
+   // { icon: Coffee, label: "Specialty Coffee", description: "Home roasting and dialing in espresso recipes." },
+    //{ icon: Music, label: "Music", description: "Guitar — fingerpicking and the occasional open mic." },
+    { icon: Gamepad2, label: "Video Games", description: "I play a wide range of video games. Click to play a few mini-games.", href: "/minigames" },
   ],
   skills: [
     "SolidWorks", "ANSYS Fluent", "Abaqus CAE", "MATLAB", "GD&T",
