@@ -37,12 +37,11 @@ export default function Resume() {
               Last updated: {format(new Date(resume.updatedAt), 'MMMM d, yyyy')}
             </div>
           )}
-          <div className="w-full rounded-lg border border-border/50 shadow-xl overflow-hidden" style={{ minHeight: "80vh" }}>
+          <div className="w-full rounded-lg border border-border/50 shadow-xl overflow-hidden" style={{ height: "calc(100vh - 220px)", minHeight: 600 }}>
             <embed
               src="/api/resume/view"
               type="application/pdf"
-              className="w-full"
-              style={{ minHeight: "80vh" }}
+              className="w-full h-full"
             />
           </div>
         </div>
