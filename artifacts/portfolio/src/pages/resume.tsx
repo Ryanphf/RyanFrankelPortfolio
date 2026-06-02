@@ -37,11 +37,12 @@ export default function Resume() {
               Last updated: {format(new Date(resume.updatedAt), 'MMMM d, yyyy')}
             </div>
           )}
-          <div className="w-full aspect-[1/1.4] bg-card rounded-lg border border-border/50 shadow-xl overflow-hidden relative">
-            <iframe 
+          <div className="w-full rounded-lg border border-border/50 shadow-xl overflow-hidden" style={{ minHeight: "80vh" }}>
+            <embed
               src="/api/resume/view"
-              className="absolute inset-0 w-full h-full border-0"
-              title="Resume Document"
+              type="application/pdf"
+              className="w-full"
+              style={{ minHeight: "80vh" }}
             />
           </div>
         </div>
