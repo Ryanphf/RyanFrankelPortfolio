@@ -1,5 +1,6 @@
-import { Wrench, BookOpen, Mountain, Coffee, Music, Globe } from "lucide-react";
+import { Wrench, BookOpen, Mountain, Coffee, Music, Gamepad2, ChevronRight } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { Link } from "wouter";
 
 const ABOUT = {
   name: "Ryan Frankel",
@@ -18,7 +19,7 @@ const ABOUT = {
     { icon: BookOpen, label: "Reading", description: "Technical history, systems theory, and good non-fiction." },
     { icon: Coffee, label: "Specialty Coffee", description: "Home roasting and dialing in espresso recipes." },
     { icon: Music, label: "Music", description: "Guitar — fingerpicking and the occasional open mic." },
-    { icon: Globe, label: "Travel", description: "Drawn to places with interesting industrial or engineering history." },
+    { icon: Gamepad2, label: "Video Games", description: "Classics and racers. Click to play a few mini-games.", href: "/minigames" },
   ],
   skills: [
     "SolidWorks", "ANSYS Fluent", "Abaqus CAE", "MATLAB", "GD&T",
@@ -79,19 +80,37 @@ export default function About() {
         <div className="grid sm:grid-cols-2 gap-4">
           {ABOUT.hobbies.map((hobby) => {
             const Icon = hobby.icon;
+            const inner = (
+              <>
+                <div className="flex-shrink-0 w-9 h-9 rounded-md bg-primary/10 flex items-center justify-center mt-0.5">
+                  <Icon className="w-4 h-4 text-primary" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="font-semibold mb-1 group-hover:text-primary transition-colors">{hobby.label}</p>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{hobby.description}</p>
+                </div>
+                {hobby.href && <ChevronRight className="w-4 h-4 text-muted-foreground self-center opacity-60 group-hover:opacity-100 transition-opacity flex-shrink-0" />}
+              </>
+            );
+            if (hobby.href) {
+              return (
+                <Link key={hobby.label} href={hobby.href}>
+                  <div
+                    data-testid={`card-hobby-${hobby.label}`}
+                    className="group flex items-start gap-4 p-5 rounded-lg border border-border bg-card hover:border-primary/40 hover:bg-primary/5 transition-all cursor-pointer"
+                  >
+                    {inner}
+                  </div>
+                </Link>
+              );
+            }
             return (
               <div
                 key={hobby.label}
                 data-testid={`card-hobby-${hobby.label}`}
-                className="flex items-start gap-4 p-5 rounded-lg border border-border bg-card"
+                className="group flex items-start gap-4 p-5 rounded-lg border border-border bg-card"
               >
-                <div className="flex-shrink-0 w-9 h-9 rounded-md bg-primary/10 flex items-center justify-center mt-0.5">
-                  <Icon className="w-4 h-4 text-primary" />
-                </div>
-                <div>
-                  <p className="font-semibold mb-1">{hobby.label}</p>
-                  <p className="text-sm text-muted-foreground leading-relaxed">{hobby.description}</p>
-                </div>
+                {inner}
               </div>
             );
           })}

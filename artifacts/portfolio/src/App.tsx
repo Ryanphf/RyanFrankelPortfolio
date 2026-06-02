@@ -11,6 +11,10 @@ import ProjectDetail from "@/pages/project-detail";
 import Resume from "@/pages/resume";
 import Contact from "@/pages/contact";
 import About from "@/pages/about";
+import Minigames from "@/pages/minigames";
+import Pong from "@/pages/games/pong";
+import Tetris from "@/pages/games/tetris";
+import CarDodge from "@/pages/games/car-dodge";
 import AdminLogin from "@/pages/admin-login";
 import AdminDashboard from "@/pages/admin-dashboard";
 import AdminProjectForm from "@/pages/admin-project-form";
@@ -27,6 +31,10 @@ function Router() {
         <Route path="/resume" component={Resume} />
         <Route path="/contact" component={Contact} />
         <Route path="/about" component={About} />
+        <Route path="/minigames" component={Minigames} />
+        <Route path="/minigames/pong" component={Pong} />
+        <Route path="/minigames/tetris" component={Tetris} />
+        <Route path="/minigames/car-dodge" component={CarDodge} />
         <Route path="/admin/login" component={AdminLogin} />
         <Route path="/admin" component={AdminDashboard} />
         <Route path="/admin/project/new" component={AdminProjectForm} />
