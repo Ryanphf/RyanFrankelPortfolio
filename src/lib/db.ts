@@ -79,9 +79,23 @@ export async function getProject(id: string): Promise<Project | null> {
 
 export type ProjectInput = Omit<Project, 'id' | 'createdAt'>
 
+function cleanData<T extends object>(obj: T): Record<string, any> {
+  const cleaned: Record<string, any> = {};
+  Object.keys(obj).forEach((key) => {
+    const value = (obj as any)[key];
+    if (value !== undefined) {
+      cleaned[key] = value;
+    }
+  });
+  return cleaned;
+}
+
 export async function createProject(data: ProjectInput): Promise<Project> {
+
+  const cleanedData = cleanData(data);
+
   const ref = await addDoc(collection(db, PROJECTS), {
-    ...data,
+    ...cleanedData,
     createdAt: serverTimestamp(),
   })
   const snap = await getDoc(ref)
@@ -89,7 +103,10 @@ export async function createProject(data: ProjectInput): Promise<Project> {
 }
 
 export async function updateProject(id: string, data: Partial<ProjectInput>): Promise<void> {
-  await updateDoc(doc(db, PROJECTS, id), data)
+
+  const cleanedData = cleanData(data);
+
+  await updateDoc(doc(db, PROJECTS, id), cleanedData)
 }
 
 export async function deleteProject(id: string): Promise<void> {
