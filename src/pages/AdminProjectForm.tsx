@@ -4,7 +4,8 @@ import { ArrowLeft, Save } from 'lucide-react'
 import { useAuth } from '@/lib/auth'
 import { useProject, useCreateProject, useUpdateProject } from '@/lib/queries'
 import type { ProjectInput } from '@/lib/db'
-import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage'
+import {  ref, uploadBytes, getDownloadURL } from 'firebase/storage'
+import { storage } from '@/lib/firebase'
 
 export default function AdminProjectForm() {
   const { id } = useParams<{ id: string }>()
@@ -65,7 +66,7 @@ export default function AdminProjectForm() {
 if (imageFile) {
       try {
         setIsUploadingImage(true)
-        const storage = getStorage()
+        
         const storageRef = ref(storage, `projects/${Date.now()}_${imageFile.name}`)
         const snapshot = await uploadBytes(storageRef, imageFile)
         finalImageUrl = await getDownloadURL(snapshot.ref)
