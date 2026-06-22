@@ -8,9 +8,9 @@ import {
   query, where, orderBy, limit, Timestamp, serverTimestamp,
 } from 'firebase/firestore'
 import {
-  ref, uploadBytes, getDownloadURL, deleteObject,
+  ref, uploadBytes, getDownloadURL, deleteObject, getStorage,
 } from 'firebase/storage'
-import { db, storage } from './firebase'
+import { db, } from './firebase'
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -38,6 +38,23 @@ export interface LeaderboardEntry {
 }
 
 // ── Projects ──────────────────────────────────────────────────────────────────
+
+const storage = getStorage();
+
+/**
+ * Uploads an image file to Firebase Storage and returns its public URL string.
+ * Pass the resulting URL into your `createProject` or `updateProject` data object as `imageUrl`.
+ */
+export async function uploadProjectImage(file: File): Promise<string> {
+  // Create a unique filepath path inside your storage bucket
+  const fileRef = ref(storage, `projects/${Date.now()}_${file.name}`);
+  
+  // Upload the file payload
+  const snapshot = await uploadBytes(fileRef, file);
+  
+  // Retrieve the public URL
+  return await getDownloadURL(snapshot.ref);
+}
 
 const PROJECTS = 'projects'
 

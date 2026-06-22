@@ -4,6 +4,7 @@ import { ArrowLeft, Save } from 'lucide-react'
 import { useAuth } from '@/lib/auth'
 import { useProject, useCreateProject, useUpdateProject } from '@/lib/queries'
 import type { ProjectInput } from '@/lib/db'
+import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 
 export default function AdminProjectForm() {
   const { id } = useParams<{ id: string }>()
@@ -20,6 +21,8 @@ export default function AdminProjectForm() {
     title: '', category: '', description: '', longDescription: '',
     tags: '', imageUrl: '', githubUrl: '', liveUrl: '', order: '', featured: false,
   })
+  const [imageFile, setImageFile] = useState<File | null>(null)
+  const [isUploadingImage, setIsUploadingImage] = useState(false)
   const [errors, setErrors] = useState<Record<string, string>>({})
 
   useEffect(() => { if (!loading && !isAdmin) navigate('/admin/login') }, [isAdmin, loading, navigate])
@@ -56,13 +59,31 @@ export default function AdminProjectForm() {
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!validate()) return
+
+    let finalImageUrl = form.imageUrl.trim()
+
+if (imageFile) {
+      try {
+        setIsUploadingImage(true)
+        const storage = getStorage()
+        const storageRef = ref(storage, `projects/${Date.now()}_${imageFile.name}`)
+        const snapshot = await uploadBytes(storageRef, imageFile)
+        finalImageUrl = await getDownloadURL(snapshot.ref)
+      } catch (error) {
+        console.error("Image upload failed:", error)
+        alert("Failed to upload image to storage.")
+        setIsUploadingImage(false)
+        return
+      }
+    }
+
     const data: ProjectInput = {
       title:           form.title.trim(),
       category:        form.category.trim(),
       description:     form.description.trim(),
       longDescription: form.longDescription.trim() || undefined,
       tags:            form.tags.split(',').map(t => t.trim()).filter(Boolean),
-      imageUrl:        form.imageUrl.trim() || undefined,
+      imageUrl:        finalImageUrl || undefined,
       githubUrl:       form.githubUrl.trim() || undefined,
       liveUrl:         form.liveUrl.trim() || undefined,
       order:           form.order !== '' ? parseInt(form.order) : undefined,
@@ -73,10 +94,11 @@ export default function AdminProjectForm() {
     } else {
       await updateProject.mutateAsync({ id: id!, data })
     }
+    setIsUploadingImage(false)
     navigate('/admin')
   }
 
-  const isSaving = createProject.isPending || updateProject.isPending
+  const isSaving = createProject.isPending || updateProject.isPending || isUploadingImage
 
   const inputCls = (field: string) =>
     `w-full px-3 py-2.5 border rounded text-sm focus:outline-none focus:ring-2 focus:ring-primary/25 focus:border-primary transition ${
@@ -127,8 +149,18 @@ export default function AdminProjectForm() {
 
           <div className="grid md:grid-cols-2 gap-5">
             <div>
-              <label className="block text-sm font-semibold mb-1.5">Image URL</label>
-              <input type="url" value={form.imageUrl} onChange={e => set('imageUrl', e.target.value)} placeholder="https://…" className={inputCls('imageUrl')} />
+              <label className="block text-sm font-semibold mb-1.5">Project Image Cover</label>
+              <input 
+                type="file" 
+                accept="image/*" 
+                onChange={e => {
+                  if(e.target.files?.[0]) setImageFile(e.target.files[0])
+                }} 
+                className="w-full text-sm text-stone-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-stone-100 file:text-stone-700 hover:file:bg-stone-200 cursor-pointer" 
+              />
+              {form.imageUrl && !imageFile && (
+                <p className="text-xs text-stone-400 mt-1.5 truncate">Current: {form.imageUrl}</p>
+              )}
             </div>
             <div>
               <label className="block text-sm font-semibold mb-1.5">Order</label>
